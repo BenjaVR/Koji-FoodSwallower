@@ -1,4 +1,12 @@
+# IDE
 .idea/
 .vscode/
 
+# Project
 node_modules/
+.cache/
+dist/
+
+# Koji
+.remy/
+/Dockerfile
