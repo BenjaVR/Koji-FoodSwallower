@@ -1,0 +1,20 @@
+{
+  "sounds": {
+    "backgroundMusic": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/8bfdj-background.mp3"
+  },
+  "@@editor": [
+    {
+      "key": "sounds",
+      "name": "Sounds",
+      "icon": "🎵",
+      "source": "sounds.json",
+      "fields": [
+        {
+          "key": "backgroundMusic",
+          "name": "Background music",
+          "type": "sound"
+        }
+      ]
+    }
+  ]
+}

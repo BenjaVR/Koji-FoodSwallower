@@ -1,4 +1,5 @@
 import React from "react";
+import { useBackgroundMusic } from "./useBackgroundMusic";
 
 /**
  * TODO:
@@ -9,8 +10,16 @@ import React from "react";
  *  - Splash screen (progress for loading all assets, should integrate with the game!)
  */
 const App: React.FC = () => {
+  const { isLoaded, isMuted, setMuted } = useBackgroundMusic();
+
   return (
-    <h1>Hello, World!</h1>
+    <>
+      <h1>Hello, World!</h1>
+      {!isLoaded && <h2>Loading...</h2>}
+      {isLoaded && <button onClick={() => setMuted(!isMuted)}>Toggle mute{isMuted
+        ? " (MUTED)"
+        : ""}</button>}
+    </>
   );
 };
 
