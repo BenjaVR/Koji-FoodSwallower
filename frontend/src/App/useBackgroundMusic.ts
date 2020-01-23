@@ -21,7 +21,7 @@ function fetchMuteStateFromLocalStorage(): boolean {
 }
 
 export const useBackgroundMusic = () => {
-  const [isLoaded, setLoaded] = useState(false);
+  const [isLoaded, setLoaded] = useState(singletonBackgroundMusic?.state() === "loaded" ?? false);
   const [isMuted, setMuted] = useState(fetchMuteStateFromLocalStorage());
 
   useEffect(() => {
@@ -35,6 +35,14 @@ export const useBackgroundMusic = () => {
       singletonBackgroundMusic.once("load", () => {
         setLoaded(true);
       });
+    } else {
+      if (singletonBackgroundMusic.state() === "loaded") {
+        setLoaded(true);
+      } else {
+        singletonBackgroundMusic.once("load", () => {
+          setLoaded(true);
+        });
+      }
     }
 
     singletonBackgroundMusic.mute(isMuted);
