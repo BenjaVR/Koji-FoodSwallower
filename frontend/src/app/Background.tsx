@@ -1,4 +1,5 @@
 import React, { CSSProperties } from "react";
+import styles from "./Background.module.scss";
 
 interface IProps {
   imageUrl?: string;
@@ -17,17 +18,12 @@ const Background: React.FC<IProps> = ({
   const colorBackgroundCss: CSSProperties = {
     backgroundColor: backupColorHex
   };
-  const sharedCss: CSSProperties = {
-    width: "100vw",
-    height: "100vh",
-    position: "absolute"
-  };
 
   const css = imageUrl === undefined
-    ? { ...colorBackgroundCss, ...sharedCss }
-    : { ...imageBackgroundCss, ...sharedCss };
+    ? colorBackgroundCss
+    : imageBackgroundCss;
 
-  return <div style={css}>{children}</div>;
+  return <div className={styles.fullscreenBackground} style={css}>{children}</div>;
 };
 
 export default Background;
