@@ -1,8 +1,9 @@
 import { Howl } from "howler";
-import Koji from "@withkoji/vcc";
 import { useEffect, useState } from "react";
 
-let singletonBackgroundMusic: Howl | undefined;
+const backgroundMusicMap: {
+  [musicUrl: string]: Howl;
+} = {};
 
 function storeMuteStateInLocalStorage(isMuted: boolean) {
   localStorage.setItem("isMuted", JSON.stringify(isMuted));
@@ -20,32 +21,32 @@ function fetchMuteStateFromLocalStorage(): boolean {
   }
 }
 
-export const useBackgroundMusic = () => {
-  const [isLoaded, setLoaded] = useState(singletonBackgroundMusic?.state() === "loaded" ?? false);
+export const useBackgroundMusic = (musicUrl: string) => {
+  const [isLoaded, setLoaded] = useState(backgroundMusicMap[musicUrl]?.state() === "loaded" ?? false);
   const [isMuted, setMuted] = useState(fetchMuteStateFromLocalStorage());
 
   useEffect(() => {
-    if (singletonBackgroundMusic === undefined) {
-      singletonBackgroundMusic = new Howl({
-        src: [Koji.config.sounds.backgroundMusic],
+    if (backgroundMusicMap[musicUrl] === undefined) {
+      backgroundMusicMap[musicUrl] = new Howl({
+        src: [musicUrl],
         autoplay: true,
         loop: true,
         mute: isMuted,
       });
-      singletonBackgroundMusic.once("load", () => {
+      backgroundMusicMap[musicUrl].once("load", () => {
         setLoaded(true);
       });
     } else {
-      if (singletonBackgroundMusic.state() === "loaded") {
+      if (backgroundMusicMap[musicUrl].state() === "loaded") {
         setLoaded(true);
       } else {
-        singletonBackgroundMusic.once("load", () => {
+        backgroundMusicMap[musicUrl].once("load", () => {
           setLoaded(true);
         });
       }
     }
 
-    singletonBackgroundMusic.mute(isMuted);
+    backgroundMusicMap[musicUrl].mute(isMuted);
     storeMuteStateInLocalStorage(isMuted);
   }, [isMuted]);
 
