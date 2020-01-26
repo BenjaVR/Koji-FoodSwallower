@@ -1,0 +1,38 @@
+{
+  "ui": {
+    "background": {
+      "image": "https://images.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/bcnjb-gamebackground.jpg",
+      "color": "#ffffff"
+    }
+  },
+  "@@editor": [
+    {
+      "key": "ui",
+      "name": "User Interface",
+      "icon": "🖼",
+      "source": "ui.json",
+      "fields": [
+        {
+          "key": "background",
+          "name": "Background",
+          "description": "Background image or color",
+          "type": "object<Background>",
+          "typeOptions": {
+            "Background": {
+              "image": {
+                "name": "Background image",
+                "description": "Image to show in the background.",
+                "type": "image"
+              },
+              "backupColor": {
+                "name": "Background backup color",
+                "description": "Color to be used as background when no image is provided.",
+                "type": "color"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
