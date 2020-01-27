@@ -3,6 +3,10 @@
     "background": {
       "image": "https://images.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/bcnjb-gamebackground.jpg",
       "color": "#ffffff"
+    },
+    "loading": {
+      "icon": "https://images.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/egjx2-ba7209bdf5d94464a9a7706da76ccc1c.png",
+      "isSpinning": true
     }
   },
   "@@editor": [
@@ -28,6 +32,26 @@
                 "name": "Background backup color",
                 "description": "Color to be used as background when no image is provided.",
                 "type": "color"
+              }
+            }
+          }
+        },
+        {
+          "key": "loading",
+          "name": "Loading",
+          "description": "Icon to show when loading the game",
+          "type": "object<Loading>",
+          "typeOptions": {
+            "Loading": {
+              "icon": {
+                "name": "Icon",
+                "description": "Icon to show when the game is loading.",
+                "type": "image"
+              },
+              "isSpinning": {
+                "name": "Spinning?",
+                "description": "Should the icon be spinning?",
+                "type": "boolean"
               }
             }
           }
