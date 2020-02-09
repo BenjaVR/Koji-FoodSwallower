@@ -6,11 +6,8 @@ export class FoodSwallowerGame extends Phaser.Game {
     super({
       type: Phaser.WEBGL,
       canvas: canvas,
-      width: 400,
-      height: 400,
       scale: {
-        mode: Phaser.Scale.ScaleModes.RESIZE,
-        autoCenter: Phaser.Scale.Center.CENTER_BOTH
+        mode: Phaser.Scale.FIT
       },
       autoFocus: true,
       scene: [
