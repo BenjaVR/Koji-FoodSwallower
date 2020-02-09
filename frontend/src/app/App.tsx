@@ -5,7 +5,6 @@ import Background from "./Background";
 import Loading from "./Loading";
 import { PhaserGame } from "../game";
 import { useGameAssetsLoader } from "../game/loading/useGameAssetsLoader";
-import { useWindowSize } from "../utilities/useWindowSize";
 import styles from "./App.module.scss";
 
 /**
@@ -17,7 +16,6 @@ import styles from "./App.module.scss";
 export const App: React.FC = () => {
   const { isLoaded, isMuted, setMuted } = useBackgroundMusic(Koji.config.sounds.backgroundMusic);
   const { areAssetsLoading, assetsLoadingPercentage } = useGameAssetsLoader();
-  const { windowWidth, windowHeight } = useWindowSize();
 
   if (!isLoaded) {
     return withBackground(
@@ -42,7 +40,7 @@ export const App: React.FC = () => {
               : ""}</button>
           </div>
           <div className={styles.gameContainer}>
-            <PhaserGame gameWidth={windowWidth} gameHeight={windowHeight} />
+            <PhaserGame />
           </div>
         </>}
       </>
