@@ -5,6 +5,8 @@ import Background from "./Background";
 import Loading from "./Loading";
 import { PhaserGame } from "../game";
 import { useGameAssetsLoader } from "../game/loading/useGameAssetsLoader";
+import { useWindowSize } from "../utilities/useWindowSize";
+import styles from "./App.module.scss";
 
 /**
  * TODO:
@@ -15,6 +17,7 @@ import { useGameAssetsLoader } from "../game/loading/useGameAssetsLoader";
 export const App: React.FC = () => {
   const { isLoaded, isMuted, setMuted } = useBackgroundMusic(Koji.config.sounds.backgroundMusic);
   const { areAssetsLoading, assetsLoadingPercentage } = useGameAssetsLoader();
+  const { windowWidth, windowHeight } = useWindowSize();
 
   if (!isLoaded) {
     return withBackground(
@@ -33,10 +36,14 @@ export const App: React.FC = () => {
         {areAssetsLoading && <h3>Loading game assets... ({assetsLoadingPercentage}%)</h3>}
         {isLoaded &&
         <>
-          <button onClick={() => setMuted(!isMuted)}>Toggle mute{isMuted
-            ? " (MUTED)"
-            : ""}</button>
-          <PhaserGame />
+          <div className={styles.overlayContainer}>
+            <button onClick={() => setMuted(!isMuted)}>Toggle mute{isMuted
+              ? " (MUTED)"
+              : ""}</button>
+          </div>
+          <div className={styles.gameContainer}>
+            <PhaserGame gameWidth={windowWidth} gameHeight={windowHeight} />
+          </div>
         </>}
       </>
     )

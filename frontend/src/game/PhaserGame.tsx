@@ -2,7 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { FoodSwallowerGame } from "./FoodSwallowerGame";
 import { useGameAssetsLoader } from "./loading/useGameAssetsLoader";
 
-export const PhaserGame: React.FC = () => {
+interface IProps {
+  gameWidth: number;
+  gameHeight: number;
+}
+
+export const PhaserGame: React.FC<IProps> = ({ gameWidth, gameHeight }) => {
   const { areAssetsLoading } = useGameAssetsLoader();
   const gameCanvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -17,6 +22,6 @@ export const PhaserGame: React.FC = () => {
     ? "none"
     : "block";
   return (
-    <canvas style={{ display }} ref={gameCanvasRef} />
+    <canvas style={{ display: display, width: gameWidth, height: gameHeight }} ref={gameCanvasRef} />
   );
 };

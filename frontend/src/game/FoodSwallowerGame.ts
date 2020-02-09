@@ -8,12 +8,14 @@ export class FoodSwallowerGame extends Phaser.Game {
       canvas: canvas,
       width: 400,
       height: 400,
+      autoFocus: true,
       scene: [
         LoadingScene
       ],
       render: {
         antialiasGL: true,
-        roundPixels: true
+        roundPixels: true,
+        transparent: true,
       },
       disableContextMenu: true,
     });
