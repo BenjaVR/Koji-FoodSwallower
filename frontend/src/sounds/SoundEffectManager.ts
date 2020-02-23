@@ -40,14 +40,14 @@ export class SoundEffectManager {
 
   private static registerSong(key: SoundEffect, properties: IHowlProperties): Promise<void> {
     return new Promise((resolve, reject) => {
-      let howl: Howl;
       try {
-        howl = new Howl(properties);
+        this.howlMap[key] = new Howl(properties)
+          .once("load", () => {
+            resolve();
+          });
       } catch (ex) {
         return reject(ex);
       }
-      this.howlMap[key] = howl;
-      return resolve();
     });
   }
 }
