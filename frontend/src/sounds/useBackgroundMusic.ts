@@ -22,8 +22,8 @@ function fetchMuteStateFromLocalStorage(): boolean {
 }
 
 export const useBackgroundMusic = (musicUrl: string) => {
-  const [isLoaded, setLoaded] = useState(backgroundMusicMap[musicUrl]?.state() === "loaded" ?? false);
-  const [isMuted, setMuted] = useState(fetchMuteStateFromLocalStorage());
+  const [isLoaded, setLoaded] = useState(backgroundMusicMap[musicUrl]?.state() === "loaded" ?? false); // TODO: replace with general loading context?
+  const [isMuted, setMuted] = useState(fetchMuteStateFromLocalStorage()); // TODO: replace with MuteContext
 
   useEffect(() => {
     if (backgroundMusicMap[musicUrl] === undefined) {

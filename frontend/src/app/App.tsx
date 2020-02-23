@@ -1,24 +1,19 @@
 import React from "react";
 import Koji from "@withkoji/vcc";
-import { useBackgroundMusic } from "./useBackgroundMusic";
 import Background from "./Background";
 import Loading from "./Loading";
 import { PhaserGame } from "../game";
 import { useGameAssetsLoader } from "../game/loading/useGameAssetsLoader";
 import styles from "./App.module.scss";
+import { MuteContext, useBackgroundMusic } from "../sounds";
+import { useLocalStorageMuteContextProvider } from "../sounds/MuteContext";
 
-/**
- * TODO:
- *  - Show global UI elements (mute button)
- *  - Manage different screens (main menu, game, leaderboard, help ...)
- *  - Register modals system (for e.g. pause menu, game over & submit to leaderboard ...)
- */
 export const App: React.FC = () => {
   const { isLoaded, isMuted, setMuted } = useBackgroundMusic(Koji.config.sounds.backgroundMusic);
   const { areAssetsLoading, assetsLoadingPercentage } = useGameAssetsLoader();
 
   if (!isLoaded) {
-    return withBackground(
+    return withAppWrapper(
       <Loading
         icon={Koji.config.ui.loading.icon}
         isSpinning={Koji.config.ui.loading.isSpinning}
@@ -27,7 +22,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    withBackground(
+    withAppWrapper(
       <>
         <h1>Hello, World!</h1>
         {!isLoaded && <h2>Loading...</h2>}
@@ -42,14 +37,24 @@ export const App: React.FC = () => {
           <div className={styles.gameContainer}>
             <PhaserGame />
           </div>
-        </>}
+        </>
+        }
       </>
     )
   );
 };
 
-function withBackground(jsx: React.ReactElement): React.ReactElement {
-  return <Background imageUrl={Koji.config.ui.background.image} backupColorHex={Koji.config.ui.background.color}>
-    {jsx}
-  </Background>;
+function withAppWrapper(jsx: React.ReactElement): React.ReactElement {
+  const muteContext = useLocalStorageMuteContextProvider();
+
+  return (
+    <MuteContext.Provider value={muteContext}>
+      <Background
+        imageUrl={Koji.config.ui.background.image}
+        backupColorHex={Koji.config.ui.background.color}
+      >
+        {jsx}
+      </Background>
+    </MuteContext.Provider>
+  );
 }
