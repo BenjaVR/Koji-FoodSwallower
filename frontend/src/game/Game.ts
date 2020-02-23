@@ -1,17 +1,25 @@
 import Phaser from "phaser";
-import { LoadingScene } from "./loading/LoadingScene";
+import { LoadingScene } from "./scenes/LoadingScene";
+import { ResponsiveScaler } from "../utilities";
+import { GameScene } from "./scenes/GameScene";
 
 export class Game extends Phaser.Game {
   constructor(canvas: HTMLCanvasElement) {
     super({
       type: Phaser.WEBGL,
       canvas: canvas,
-      scale: {
-        mode: Phaser.Scale.FIT
+      width: window.innerWidth,
+      height: window.innerHeight,
+      physics: {
+        default: "arcade",
+        arcade: {
+          debug: false,
+        }
       },
       autoFocus: true,
       scene: [
-        LoadingScene
+        LoadingScene,
+        GameScene
       ],
       render: {
         antialiasGL: true,
@@ -20,5 +28,17 @@ export class Game extends Phaser.Game {
       },
       disableContextMenu: true,
     });
+
+    ResponsiveScaler.registerResizeHandler({
+      handler: () => {
+        this.scale.resize(window.innerWidth, window.innerHeight);
+      },
+      neverResetHandler: true, // Constructor will not run again when game restarts.
+    });
+  }
+
+  public destroy(removeCanvas: boolean, noReturn?: boolean): void {
+    super.destroy(removeCanvas, noReturn);
+    ResponsiveScaler.reset();
   }
 }

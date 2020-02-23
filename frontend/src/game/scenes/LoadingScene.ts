@@ -1,7 +1,13 @@
-import { BaseScene } from "../infrastructure/BaseScene";
-import { GameAssetsLoader } from "./GameAssetsLoader";
+import { BaseScene } from "./BaseScene";
+import { GameAssetsLoader } from "../loading/GameAssetsLoader";
 
 export class LoadingScene extends BaseScene {
+  public static readonly KEY = "LoadingScene";
+
+  constructor() {
+    super({ key: LoadingScene.KEY });
+  }
+
   public preload(): void {
     GameAssetsLoader.isLoading = true;
 
@@ -18,16 +24,11 @@ export class LoadingScene extends BaseScene {
     });
   }
 
-  public update(time: number, delta: number): void {
-    // TODO: start the game scene
+  public create(): void {
+    // TODO
   }
 
-  public create(): void {
-    const size = new Phaser.Structs.Size(100, 200);
-
-    const radius = 40;
-    const centerX = this.cameras.main.displayWidth / 2 + (radius / 2);
-    const centerY = this.cameras.main.displayHeight / 2 + (radius / 2);
-    this.add.circle(centerX, centerY, radius, 0x222222, 1);
+  public update(time: number, delta: number): void {
+    // TODO: start the game scene
   }
 }
