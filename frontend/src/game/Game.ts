@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import { LoadingScene } from "./loading/LoadingScene";
 
-export class FoodSwallowerGame extends Phaser.Game {
+export class Game extends Phaser.Game {
   constructor(canvas: HTMLCanvasElement) {
     super({
       type: Phaser.WEBGL,

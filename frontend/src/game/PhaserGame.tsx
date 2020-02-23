@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { FoodSwallowerGame } from "./FoodSwallowerGame";
+import { Game } from "./Game";
 import { useGameAssetsLoader } from "./loading/useGameAssetsLoader";
 import classNames from "classnames";
 import styles from "./PhaserGame.module.scss";
@@ -12,7 +12,7 @@ export const PhaserGame: React.FC = () => {
     if (gameCanvasRef.current === null) {
       return;
     }
-    new FoodSwallowerGame(gameCanvasRef.current);
+    new Game(gameCanvasRef.current);
   }, [gameCanvasRef]);
 
   return (
