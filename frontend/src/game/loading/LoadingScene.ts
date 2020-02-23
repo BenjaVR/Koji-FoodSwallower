@@ -5,32 +5,21 @@ export class LoadingScene extends BaseScene {
   public preload(): void {
     GameAssetsLoader.isLoading = true;
 
-    let i = 0;
-    const interval = window.setInterval(() => {
-      GameAssetsLoader.loadingPercentage = ++i * 20;
-    }, 200);
-    window.setTimeout(() => {
-      window.clearInterval(interval);
-      GameAssetsLoader.isLoading = false;
-    }, 1000);
+    // TODO: load game assets here
 
-    // TODO: launch the external loading indicator
     this.load.on("progress", (progress: number) => {
-      // TODO: update the loading percentage on the external loading indicator
-      console.log(Math.round(progress * 100) + "%");
+      GameAssetsLoader.loadingPercentage = progress * 100;
     });
     this.load.on("fileprogress", (file: Phaser.Loader.File) => {
-      // TODO: update the text on the external loading indicator
-      console.log(`Loading asset: ${file.src}`);
+      GameAssetsLoader.loadingText = `Loading asset: ${file.src}`;
     });
     this.load.on("complete", () => {
-      // TODO: hide the external loading indicator
-      console.log("done!");
+      GameAssetsLoader.isLoading = false;
     });
   }
 
   public update(time: number, delta: number): void {
-    // TODO: start the game(menu) scene
+    // TODO: start the game scene
   }
 
   public create(): void {
