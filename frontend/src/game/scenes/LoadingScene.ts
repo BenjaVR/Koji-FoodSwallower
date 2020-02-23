@@ -1,5 +1,6 @@
 import { BaseScene } from "./BaseScene";
 import { GameAssetsLoader } from "../loading/GameAssetsLoader";
+import { GameScene } from "./GameScene";
 
 export class LoadingScene extends BaseScene {
   public static readonly KEY = "LoadingScene";
@@ -24,11 +25,7 @@ export class LoadingScene extends BaseScene {
     });
   }
 
-  public create(): void {
-    // TODO
-  }
-
   public update(time: number, delta: number): void {
-    // TODO: start the game scene
+    this.scene.start(GameScene.KEY);
   }
 }
