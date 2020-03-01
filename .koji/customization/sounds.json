@@ -1,6 +1,11 @@
 {
   "sounds": {
-    "backgroundMusic": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/8bfdj-background.mp3"
+    "backgroundMusic": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/8bfdj-background.mp3",
+    "loseLife": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/d6pbn-eatbadfood.ogg",
+    "gainPoint": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/rxcuy-eatgoodfood.ogg",
+    "gameOver": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/era4m-gameover.wav",
+    "uiClick": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/3uf7g-click.wav",
+    "uiHover": "https://objects.koji-cdn.com/f537035f-1526-4881-b153-b9f2e8aab1fe/6830l-mouseover.wav"
   },
   "@@editor": [
     {
@@ -12,6 +17,31 @@
         {
           "key": "backgroundMusic",
           "name": "Background music",
+          "type": "sound"
+        },
+        {
+          "key": "loseLife",
+          "name": "Sound effect when losing a life",
+          "type": "sound"
+        },
+        {
+          "key": "gainPoint",
+          "name": "Sound effect when gaining a point",
+          "type": "sound"
+        },
+        {
+          "key": "gameOver",
+          "name": "Sound effect when game is over",
+          "type": "sound"
+        },
+        {
+          "key": "uiClick",
+          "name": "Button click sounds effect",
+          "type": "sound"
+        },
+        {
+          "key": "uiHover",
+          "name": "Button hover sound effect",
           "type": "sound"
         }
       ]
