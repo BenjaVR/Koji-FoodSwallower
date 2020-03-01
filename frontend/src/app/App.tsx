@@ -1,60 +1,70 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Koji from "@withkoji/vcc";
 import Background from "./Background";
 import Loading from "./Loading";
 import { PhaserGame } from "../game";
-import { useGameAssetsLoader } from "../game/loading/useGameAssetsLoader";
 import styles from "./App.module.scss";
-import { MuteContext, useBackgroundMusic } from "../sounds";
+import { MuteContext } from "../sounds";
 import { useLocalStorageMuteContextProvider } from "../sounds/MuteContext";
+import { AudioManager } from "../sounds/AudioManager";
 
 export const App: React.FC = () => {
-  const { isLoaded, isMuted, setMuted } = useBackgroundMusic(Koji.config.sounds.backgroundMusic);
-  const { areAssetsLoading, assetsLoadingPercentage } = useGameAssetsLoader();
+  const muteContextProvider = useLocalStorageMuteContextProvider();
+  const [isLoading, setLoading] = useState(true);
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
 
-  if (!isLoaded) {
-    return withAppWrapper(
-      <Loading
-        icon={Koji.config.ui.loading.icon}
-        isSpinning={Koji.config.ui.loading.isSpinning}
-      />
-    );
-  }
+  useEffect(() => {
+    AudioManager
+      .loadAllSounds(percentage => setLoadingPercentage(percentage))
+      .then(() => {
+        setLoading(false);
+        AudioManager.getSound("BackgroundMusic").play();
+      });
+  }, []);
 
-  return (
-    withAppWrapper(
-      <>
-        <h1>Hello, World!</h1>
-        {!isLoaded && <h2>Loading...</h2>}
-        {areAssetsLoading && <h3>Loading game assets... ({assetsLoadingPercentage}%)</h3>}
-        {isLoaded &&
-        <>
-          <div className={styles.overlayContainer}>
-            <button onClick={() => setMuted(!isMuted)}>Toggle mute{isMuted
-              ? " (MUTED)"
-              : ""}</button>
-          </div>
-          <div className={styles.gameContainer}>
-            <PhaserGame />
-          </div>
-        </>
-        }
-      </>
-    )
-  );
-};
-
-function withAppWrapper(jsx: React.ReactElement): React.ReactElement {
-  const muteContext = useLocalStorageMuteContextProvider();
+  const app = isLoading
+    ? <LoadingApp loadingPercentage={loadingPercentage} />
+    : <LoadedApp />;
 
   return (
-    <MuteContext.Provider value={muteContext}>
+    <MuteContext.Provider value={muteContextProvider}>
       <Background
         imageUrl={Koji.config.ui.background.image}
         backupColorHex={Koji.config.ui.background.color}
       >
-        {jsx}
+        {app}
       </Background>
     </MuteContext.Provider>
-  );
+  )
+};
+
+interface ILoadingAppProps {
+  loadingPercentage: number;
 }
+
+const LoadingApp: React.FC<ILoadingAppProps> = ({ loadingPercentage }) => {
+  return (
+      <Loading
+        icon={Koji.config.ui.loading.icon}
+        isSpinning={Koji.config.ui.loading.isSpinning}
+        loadingText={`Loading... ${loadingPercentage}%`}
+      />
+  );
+};
+
+const LoadedApp: React.FC = () => {
+  const muteContext = useContext(MuteContext);
+  return (
+    <>
+      <h1>Hello, World!</h1>
+      <div className={styles.overlayContainer}>
+        <button onClick={() => muteContext.setMuted(!muteContext.isMuted)}>Toggle mute{muteContext.isMuted
+          ? " (MUTED)"
+          : ""}</button>
+      </div>
+      <div className={styles.gameContainer}>
+        <PhaserGame />
+      </div>
+    </>
+  );
+};

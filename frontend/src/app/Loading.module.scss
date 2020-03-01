@@ -1,21 +1,30 @@
 $zIndex: 1000;
+$iconSize: min(80vw, 80vh, 500px);
 
 .overlay {
   width: 100vw;
   height: 100vh;
   z-index: $zIndex;
   background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
-.icon {
-  position: absolute;
+.loadingWrapper {
   z-index: $zIndex + 1;
-
-  $iconSize: min(90vw, 90vh, 500px);
-  width: $iconSize;
-  height: $iconSize;
-  left: calc((100vw - #{$iconSize}) / 2);
+  position: absolute;
+  width: 100%;
   top: calc((100vh - #{$iconSize}) / 2);
+
+  .icon {
+    width: $iconSize;
+    height: $iconSize;
+  }
+
+  .loadingText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

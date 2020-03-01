@@ -7,7 +7,7 @@ interface IMuteContext {
 
 export const MuteContext = React.createContext<IMuteContext>({
   isMuted: false,
-  setMuted: () => { }
+  setMuted: () => { console.log("test?") }
 });
 
 export function useLocalStorageMuteContextProvider(): IMuteContext {
@@ -23,6 +23,8 @@ export function useLocalStorageMuteContextProvider(): IMuteContext {
   }();
 
   const [isMuted, setMuted] = useState(parsedValueInLocalStorage);
+
+  Howler.mute(isMuted);
 
   return {
     isMuted,
